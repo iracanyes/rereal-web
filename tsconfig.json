@@ -29,8 +29,10 @@
       "@root/*": ["./app/root/*"],
       "@security/*": ["./app/security/*"],
       "@dashboard/*": ["./app/dashboard/*"],
+      "@reports/*": ["./app/reports/*"],
       "@environment": ["./environment/environment.ts"],
-      "@shared/*": ["./app/shared/*"]
+      "@shared/*": ["./app/shared/*"],
+      "@api/*": ["./app/shared/api/*"]
     }
   },
   "angularCompilerOptions": {

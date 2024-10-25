@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {SignInFormComponent} from "@shared/ui/form";
-import {FormGroup} from "@angular/forms";
-import {SignInFormDto} from "@security/model/dto";
 
 @Component({
   selector: 'app-sign-in-page',
@@ -13,6 +11,6 @@ import {SignInFormDto} from "@security/model/dto";
   styleUrl: './sign-in-page.component.scss'
 })
 export class SignInPage {
-  title = 'Sign In';
-  loginFormGroup: FormGroup<SignInFormDto>;
+  title: string = 'Welcome to EuroSkyeStarr Euro-Rereal';
+  subTitle: string = 'Identifiez-vous  et accéder à la plateforme';
 }

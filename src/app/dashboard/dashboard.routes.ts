@@ -1,4 +1,4 @@
-import {AppNode} from "../shared/enum/app.node";
+import {AppNode} from "@shared/core/enum/app.node";
 import {Routes} from "@angular/router";
 
 export const DashboardRoutes: Routes = [
