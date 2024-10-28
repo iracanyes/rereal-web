@@ -25,10 +25,12 @@ import {ApiNode} from "@api/enum/api-node.enum";
 
 
 export const HttpInterceptor = (req: HttpRequest<any>, next: any) => {
-
+  const currentRoute = new URL(req.url).pathname.slice(1);
   console.log(`publicRoutes: ${publicRoutes}`);
+  console.log(`req.url: ${currentRoute}`);
+
   // Here we
-  if(publicRoutes.includes(req.url)){
+  if(publicRoutes.includes(currentRoute)){
     return next(req)
       .pipe(
         tap(() => console.log('Route public intercepté!'))
@@ -60,7 +62,7 @@ export const HttpInterceptor = (req: HttpRequest<any>, next: any) => {
 
   // If it's private route and no token exists,
   // Redirect to login page
-  return redirectToLogin(router);
+  return redirectToLogin(router, currentRoute);
 };
 
 const setTokenInHeader: AddTokenHeaderFn = (req: HttpRequest<any>, token: string): HttpRequest<any> => {
@@ -69,8 +71,11 @@ const setTokenInHeader: AddTokenHeaderFn = (req: HttpRequest<any>, token: string
   });
 }
 
-const redirectToLogin: (router: Router) => Observable<any> = (router) => {
-  router.navigate([AppNode.SIGN_IN]).then();
+const redirectToLogin: (router: Router,currentRoute: string) => Observable<any> = (
+  router: Router,
+  currentRoute: string
+) => {
+  router.navigate([AppNode.SIGN_IN], { queryParams: {previous: currentRoute }}).then();
   return EMPTY;
 }
 
@@ -118,13 +123,13 @@ const handleError: HttpInterceptorHandlerFn = (
             }
 
             // Redirect because refreshToken is expired too
-            return redirectToLogin(router);
+            return redirectToLogin(router, new URL(req.url).pathname.slice(1));
           })
         );
     }
 
     // Redirect because the refreshToken doesn't exist
-    return redirectToLogin(router);
+    return redirectToLogin(router, new URL(req.url).pathname.slice(1));
   }
 
   // Here we can show something to client

@@ -55,7 +55,7 @@ export class SignInFormComponent {
         console.debug('Sign In result', JSON.stringify(result));
 
 
-        if(result.data.token.length > 0){
+        if(!isNil(result.data) && result.data.token.length > 0){
           console.debug('localStorage exists: ', !isNil(localStorage));
           if(!isNil(localStorage)){
             localStorage.setItem(Environment.TOKEN_KEY, JSON.stringify(result.data));
@@ -65,6 +65,8 @@ export class SignInFormComponent {
 
             this.router.navigate([previousUrl]);
           }
+        }else{
+
         }
       });
   }

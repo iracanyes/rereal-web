@@ -1,4 +1,5 @@
 export enum AppNode {
+  BASE_URL = '/',
   SIGN_IN = 'sign-in',
   SIGN_OUT = 'logout',
   AUTHENTICATED = 'home',
@@ -9,6 +10,7 @@ export enum AppNode {
   EQUIPMENTS = 'equipments',
   APPS = 'apps',
   REPORTS = 'reports',
+  SITE = 'site',
 
 
 

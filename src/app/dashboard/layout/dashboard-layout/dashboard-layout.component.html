@@ -1,0 +1,14 @@
+<header class="flex w-full">
+  <app-header-menu class="w-full"></app-header-menu>
+</header>
+<section id="main-content" class="flex flex-row h-full">
+  <aside id="sidebar-left" class="h-full">
+    <app-sidebar-menu class="flex-none w-72"/>
+  </aside>
+  <main class="flex-1">
+    <router-outlet></router-outlet>
+  </main>
+  <aside id="sidebar-right" class="flex-none w-96 bg-transparent bg-gradient-to-b from-sky-400 to-blue-600">
+
+  </aside>
+</section>
