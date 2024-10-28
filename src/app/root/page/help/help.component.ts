@@ -5,9 +5,9 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  templateUrl: './help.component.html',
+  styleUrl: './help.component.scss'
 })
-export class AppComponent {
-  title = 'rereal-web';
+export class HelpPage {
+  title = 'Rereal Web - Angular help page';
 }
