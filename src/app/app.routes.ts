@@ -16,6 +16,8 @@ export const routes: Routes = [
   {
     path: AppNode.AUTHENTICATED,
     canActivate: [DashboardGuard(AppNode.REDIRECT_TO_LOGIN)],
+    loadComponent: () => import('@dashboard/layout/dashboard-layout/dashboard-layout.component')
+      .then(c => c.DashboardLayoutComponent),
     loadChildren: () => import('@dashboard/dashboard.routes')
       .then( r => r.DashboardRoutes)
   },

@@ -1,4 +1,4 @@
-import {Component, inject, PLATFORM_ID} from '@angular/core';
+import {afterRender, Component, inject, PLATFORM_ID} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SignInFormDto} from "@security/model/dto";
 import {ApiService} from "@api/service/api.service";
@@ -11,11 +11,12 @@ import {isNil} from "lodash";
 import {Environment} from "@environment";
 import {ActivatedRoute, Router, RouterModule} from "@angular/router";
 import {AppNode} from "@shared/core/enum/app.node";
+import {TokenService} from "@security/service";
 
 @Component({
   selector: 'app-sign-in-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgIf],
+  imports: [CommonModule, ReactiveFormsModule, NgIf, RouterModule],
   templateUrl: './sign-in-form.component.html',
   styleUrl: './sign-in-form.component.scss'
 })
@@ -24,6 +25,7 @@ export class SignInFormComponent {
   loginFormGroup: FormGroup<SignInFormDto>;
   private readonly api: ApiService = inject(ApiService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly tokenService: TokenService = inject(TokenService);
   private readonly router: Router = inject(Router);
 
   constructor() {
@@ -49,7 +51,6 @@ export class SignInFormComponent {
   }
 
   signIn() {
-    // Post req
     this.api.post(ApiNode.SIGN_IN, this.loginFormGroup.value)
       .subscribe((result: ApiResponse) => {
         console.debug('Sign In result', JSON.stringify(result));
@@ -58,16 +59,20 @@ export class SignInFormComponent {
         if(!isNil(result.data) && result.data.token.length > 0){
           console.debug('localStorage exists: ', !isNil(localStorage));
           if(!isNil(localStorage)){
-            localStorage.setItem(Environment.TOKEN_KEY, JSON.stringify(result.data));
-
+            //localStorage.setItem(Environment.TOKEN_KEY, JSON.stringify(result.data));
+            this.tokenService.setToken(result.data);
             // Redirect to previous route
-            const previousUrl = this.route.snapshot.queryParams['previous'] || '/';
+            const previousUrl = this.route.snapshot.queryParams['previous'] || '/'+AppNode.AUTHENTICATED;
 
-            this.router.navigate([previousUrl]);
+            console.debug('previous url: ', previousUrl);
+            console.debug('sign-in form - localStorage', localStorage);
+
+            this.router.navigate([previousUrl]).then();
           }
         }else{
-
+          // Afficher un message d'erreur
         }
       });
+
   }
 }

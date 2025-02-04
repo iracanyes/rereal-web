@@ -8,7 +8,7 @@
  */
 import {HttpErrorResponse, HttpHandlerFn, HttpRequest} from "@angular/common/http";
 import {catchError, EMPTY, Observable, switchMap, tap} from "rxjs";
-import { publicRoutes } from "@api/enum/api-public.node";
+import { publicRoutes } from "@api/enum/public.route";
 import {inject} from "@angular/core";
 import {TokenService} from "@security/service";
 import {Router} from "@angular/router";
@@ -26,8 +26,9 @@ import {ApiNode} from "@api/enum/api-node.enum";
 
 export const HttpInterceptor = (req: HttpRequest<any>, next: any) => {
   const currentRoute = new URL(req.url).pathname.slice(1);
-  console.log(`publicRoutes: ${publicRoutes}`);
-  console.log(`req.url: ${currentRoute}`);
+
+  //console.log(`publicRoutes: ${publicRoutes}`);
+  //console.log(`req.url: ${currentRoute}`);
 
   // Here we
   if(publicRoutes.includes(currentRoute)){
