@@ -1,0 +1,75 @@
+<div class="bg-white py-10">
+  <div class="max-w-7xl mx-auto">
+    <div class="px-4 lg:px-8 sm:px-6">
+      <div class="flex sm:items-center">
+        <div class="flex-1">
+          <h1 class="text-base font-semibold text-gray-900">
+            {{ title }}
+          </h1>
+          <p class="mt-2 text-sm text-gray-700">
+            {{ subtitle }}
+          </p>
+        </div>
+        <div class="mt-4 sm:mt-0 ml-16 sm:flex-0">
+          <a routerLink="/reports/create">
+            <button type="button" class="d-block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-400">
+              Créer un rapport
+            </button>
+          </a>
+
+        </div>
+      </div>
+      <div class="flow-root mt-8">
+        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle sm:px-6">
+            <table class="min-w-full">
+              <thead>
+              <tr>
+                <th scope="col" class="py-3.5 pr-3 pl-4  text-sm font-semibold baw sm:pl-0">Date Created</th>
+                <th scope="col" class="py-3.5 pr-3 pl-4  text-sm font-semibold baw sm:pl-0">Application</th>
+                <th scope="col" class="py-3.5 pr-3 pl-4  text-sm font-semibold baw sm:pl-0">Equipment</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Type</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Additional Information</th>
+                <th scope="col" class="relative py-3.5 pr-4 pl-3 sm:pr-0"><span class="i">Show detail</span></th>
+              </tr>
+              </thead>
+              <tbody class="aec aeh">
+              @for (report of $reports(); track report.id){
+                <tr>
+                  <td class="py-3.5 pr-3 pl-4 text-sm font-medium azx text-gray-900 sm:pl-0">{{ report.createdAt | date:'short' }}</td>
+                  @if(report.application){
+                    <td class="px-3 py-4 text-sm whitespace-nowrap bas">{{ report.application.name }}</td>
+                  }@else{
+                    <td class="px-3 py-4 text-sm whitespace-nowrap bas">
+
+                    </td>
+                  }
+
+                  @if(report.equipment){
+                    <td class="px-3 py-4 text-sm whitespace-nowrap bas">{{ report.equipment.name }}</td>
+                  }@else{
+                    <td class="px-3 py-4 text-sm whitespace-nowrap bas">
+
+                    </td>
+                  }
+                  <td class="px-3 py-4 text-sm whitespace-nowrap bas">{{ report.type }}</td>
+                  <td class="px-3 py-4 text-sm whitespace-nowrap bas">{{ report.status }}</td>
+                  <td class="px-3 py-4 text-sm whitespace-nowrap bas">{{ report.additionalInformation }}</td>
+                  <td class="relative  py-4 pr-4 pl-3 ayd text-sm font-medium whitespace-nowrap cyo">
+                    <a routerLink="/{{ AppNode.REPORT_DETAIL + '/' + report.id }}" class="p-2 border-2 hover:border-3 border-indigo-400 hover:border-indigo-600 rounded-md text-indigo-600 hover:text-indigo-400 bwd">
+                      Show <span class="hidden">, {{ report.id }}</span>
+                    </a>
+                  </td>
+                </tr>
+              }
+
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

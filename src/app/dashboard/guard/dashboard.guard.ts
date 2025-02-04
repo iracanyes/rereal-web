@@ -6,19 +6,18 @@ import {
   Router,
   RouterStateSnapshot
 } from "@angular/router";
-import {inject, PLATFORM_ID} from "@angular/core";
+import {afterRender, inject, PLATFORM_ID} from "@angular/core";
 import {DOCUMENT, isPlatformBrowser} from "@angular/common";
 import {Environment} from "@environment";
 import { isNil } from 'lodash';
 
-export const DashboardGuard: (redirectUri: string)=> CanActivateFn  = (redirectUri: string): CanActivateFn => {
+export const DashboardGuard: (redirectUri: string) => CanActivateFn  = (redirectUri: string): CanActivateFn => {
   return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
     const router: Router = inject(Router);
-    const document: Document = inject(DOCUMENT);
-    const localStorage = document.defaultView?.localStorage;
+    // SSR: Necessary to
+    const platform_id = inject(PLATFORM_ID);
 
-
-    if(localStorage){
+    if(isPlatformBrowser(platform_id)){
       const tokenStr = localStorage.getItem(Environment.TOKEN_KEY);
 
       const canAccess: boolean = !isNil(tokenStr)
@@ -30,7 +29,5 @@ export const DashboardGuard: (redirectUri: string)=> CanActivateFn  = (redirectU
     }else{
       return router.createUrlTree([redirectUri], {queryParams: {'previous': state.url }});
     }
-
-
   };
 }

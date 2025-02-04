@@ -1,1 +1,15 @@
-<app-sidebar-menu>
+<section id="home" class="flex flex-auto flex-col  h-full overflow-y-scroll bg-slate-200 p-5">
+  <h1 class="mx-auto w-7 leading-8 text-xl text-center font-bold ">Dashboard</h1>
+  <section id="resume-cards" class="flex flex-row h-32 gap-x-3 my-3 p-3">
+    <app-dashboard-resume-card class="flex w-1/3"/>
+    <app-doughnut-chart-card  class="flex  w-1/3"/>
+    <app-availability-resume-card class="flex  w-1/3" />
+  </section>
+  <section id="resume-charts" class="flex flex-row h-96 px-3 gap-x-3">
+    <app-report-resume-chart class="flex flex-1"/>
+    <app-pie-chart-card class="flex"/>
+  </section>
+  <section id="table-reports" class="flex w-full p-3">
+    <app-grouped-row-table-card class="w-full" />
+  </section>
+</section>
